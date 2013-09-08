@@ -1,9 +1,67 @@
-GODZINA ZERO
-
-24h zegar
+GODZINA ZERO - w miejscu dwunastki, 24h zegar
 
 na tylniej ścianie:
-
 BECAUSE FUCK YOU - THAT'S WHY
 
-Duży zegar - można wejść i pooglądać, ładny duży klucz do nakręcania
+Duży zegar - można wejść i pooglądać, ładny duży klucz do nakręcania -
+jak w archetypowej zabawce żołnierza gwardii Królowej brytyjskiej
+
+
+
+
+
+PRZEKŁADNIE
+6
+12
+15
+24
+36
+60
+
+Wahadło
+|
+Anchor : 12
+          |
+          |
+          |        sekundy
+          6 : 15   |           - 1 : 2.5
+          |    |   |
+          |    |   |
+          |    |   |
+          |    6 : 12          - 1 : 2
+          ^        |
+         / \       |
+Ciężarek-|-|       |
+         |-|       |
+         \_/       |
+          |        |
+ _ _ _ _ _|_ _     |
+          |        |
+          ^        |
+         / \       |
+        /   \      |
+       /     \     |
+       |     |     |
+        \_^_/      |
+Klucz do nakręcania|
+                   |
+                   |
+                   |
+     minuty        |
+          |   36 : 6           - 1 : 6
+          |    |
+          |    |
+          |    |
+          60 : 6               - 1 : 10
+          |
+          |
+          |
+          6 : 24               - 1 : 4
+               |
+               |
+               |
+               6 : 36          - 1 : 6
+                   |
+                   |
+                   |
+                   godziny (24)
