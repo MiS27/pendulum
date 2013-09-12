@@ -1,4 +1,5 @@
 #include "model.h"
+#include "world.h"
 
 Model::Model(World *in_world) {
 	world = in_world;
@@ -29,7 +30,7 @@ bool Model::parse_scene(const aiScene *pScene, string &model_file) {
 		
 		for (unsigned i = 0, len = pScene->mNumMeshes; i < len; ++i) {
 			const aiMesh* paiMesh = pScene->mMeshes[i];
-			meshes.push_back(new Mesh(paiMesh, textures[paiMesh->mMaterialIndex, world]));
+			meshes.push_back(new Mesh(paiMesh, textures[paiMesh->mMaterialIndex], world));
 		}
 	} else {
 		return false;
@@ -64,6 +65,7 @@ bool Model::load_textures(const aiScene* pScene, const string& model_file) {
 }
 
 bool Model::load_texture_from_material(aiMaterial *material, string &dir, Texture **texture) {
+	bool res = true;
 	if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 		aiString path;
 		

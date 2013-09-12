@@ -1,0 +1,3 @@
+pendulum
+obj/*.o
+obj/tests/*

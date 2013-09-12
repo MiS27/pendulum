@@ -4,18 +4,17 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+using namespace std;
 
 #include "shared.h"
-#include "model.h"
 
-class World;
+class Model;
 
 #include "shader_program.h"
 
 class Camera;
 #include "camera.h"
 
-using namespace std;
 
 class World {
 private: 
@@ -25,6 +24,7 @@ private:
 	bool invert_mouse_y;
 
 	Camera *camera;
+	Model *model;
 
 	void setup_shaders();
 	void clean_shaders();
@@ -38,7 +38,7 @@ public:
 	void draw();
 	void mouse_motion(float dang_h, float dang_v);
 
-	void pass_matrix_to_shader(const char *var_string, glm::mat4 &matrix);
+	void pass_matrix_to_shader(char *var_string, glm::mat4 &matrix);
 	void assign_vbo_to_attribute(char* attribute_name, GLuint buf_vbo, int variable_size);
 };
 

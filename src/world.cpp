@@ -5,7 +5,7 @@
 #include <cstring>
 #include <sstream>
 #include <string>
-#include "vehicle.h"
+#include "model.h"
 
 glm::vec3 str_to_vec3(const string &in_s) {
 	float x, y,	z;
@@ -56,9 +56,19 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
       ini.get<float>("angX", 0.0f),
 			ini.get<float>("speed", 20.0f),
       ini.get<float>("max_vertical_angle_up", 0.5f),
-      ini.get<float>("max_vertical_angle_down", 0.5f),
+      ini.get<float>("max_vertical_angle_down", 0.5f)
 		);
 	}
+
+	{
+		model = new Model(this);
+		if(!model->load("models/dobra_dupa.obj")) {
+			fprintf(stderr, "Nie ma dup, nie ma programu.\n");
+			return false;
+		}
+	}
+
+	printf("World loaded!\n");
 	
   return true;
 }
@@ -73,7 +83,7 @@ void World::clear() {
 }
 
 void World::draw() {
-	glm::mat4 V = camera->get_view_matrix();
+	// glm::mat4 V = camera->get_view_matrix();
 
 	// for (unsigned i = 0, len = truck->left_wheels.size(); i < len; ++i) {
 	// 	truck->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
@@ -106,22 +116,22 @@ void World::mouse_motion(float dang_h, float dang_v) {
 	camera->mouse_motion(dang_h * mouse_sensitivity_x / 300, dang_v * mouse_sensitivity_y / 300);
 }
 
-void setup_shaders() {
-  shader_program = new shader_program("vshader.txt", NULL, "fshader.txt");
+void World::setup_shaders() {
+  shader_program = new ShaderProgram("vshader.txt", NULL, "fshader.txt");
   shader_program->use();
   glUniform1i(shader_program->getUniformLocation("textureMap0"),0);
   glUniform1i(shader_program->getUniformLocation("textureMap1"),1);
 }
 
-void clean_shaders() {
+void World::clean_shaders() {
   delete shader_program;
 }
 
-void pass_matrix_to_shader(const char *var_string, glm::mat4 &matrix) {
+void World::pass_matrix_to_shader(char *var_string, glm::mat4 &matrix) {
 	glUniformMatrix4fv(shader_program->getUniformLocation(var_string), 1, false, glm::value_ptr(matrix));	
 }
 
-void assign_vbo_to_attribute(char* attribute_name, GLuint buf_vbo, int variable_size);
+void World::assign_vbo_to_attribute(char* attribute_name, GLuint buf_vbo, int variable_size) {
 	GLuint location = shader_program->getAttribLocation(attribute_name);
 	glBindBuffer(GL_ARRAY_BUFFER, buf_vbo);
 	glEnableVertexAttribArray(location);

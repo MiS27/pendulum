@@ -5,7 +5,7 @@ OPTS=-I/usr/include/ImageMagick -I/usr/local/include/assimp `Magick++-config --c
 CCFLAGS=-g -Wall
 
 TARGET=pendulum
-FULL_SOURCES=camera mesh model shared texture vertex world
+FULL_SOURCES=camera mesh model shader_program shared texture vertex world
 SOURCES=$(FULL_SOURCES) main
 HEADERS=$(FULL_SOURCES) libs/INI
 

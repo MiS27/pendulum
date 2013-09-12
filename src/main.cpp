@@ -55,8 +55,6 @@ void keyDown(unsigned char c, int x, int y) {
         case 'd':
             f_key_d = true;
             break;
-        case 'p':
-            world->tmp_animate();
     }
 }
 
@@ -174,13 +172,14 @@ void gl_init(int *argc, char **argv) {
 	glutSpecialFunc(key_down);
 	glutPassiveMotionFunc(mouse_motion);
 	glutMotionFunc(mouse_motion);
-
-  setupShaders();
 }
 
 int main(int argc, char **argv) {
 	gl_init(&argc, argv);
-	world->load("config.ini", screen_width, screen_height);
+  if(!world->load("config.ini", screen_width, screen_height)) {
+    fprintf(stderr, "Error loading world. Spierdalaj\n");
+    return -1;
+  }
 	
 	glutMainLoop();
 

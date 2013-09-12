@@ -8,9 +8,6 @@
 
 #define CAMERA_RADIUS 100
 
-class World;
-#include "world.h"
-
 class Camera {
 private:
 	Vertex3D<float>position;
