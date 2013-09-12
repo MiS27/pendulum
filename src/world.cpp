@@ -83,26 +83,9 @@ void World::clear() {
 }
 
 void World::draw() {
-	// glm::mat4 V = camera->get_view_matrix();
-
-	// for (unsigned i = 0, len = truck->left_wheels.size(); i < len; ++i) {
-	// 	truck->left_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-	// 	truck->right_wheels[i]->set_mv_matrix(glm::mat4(1.0f));
-	// }
-	
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glDisable(GL_CULL_FACE);
-
-	// draw();
-	
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
+	glm::mat4 V = camera->get_view_matrix();
+	pass_matrix_to_shader("V", V);
+	model->draw();
 }
 
 void World::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left) {
@@ -120,7 +103,6 @@ void World::setup_shaders() {
   shader_program = new ShaderProgram("vshader.txt", NULL, "fshader.txt");
   shader_program->use();
   glUniform1i(shader_program->getUniformLocation("textureMap0"),0);
-  glUniform1i(shader_program->getUniformLocation("textureMap1"),1);
 }
 
 void World::clean_shaders() {

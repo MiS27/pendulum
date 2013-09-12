@@ -14,7 +14,6 @@ vec4 lp=vec4(0,0,7,1);
 out vec4 iV;
 out vec4 iN;
 out vec4 iL;
-out vec4 iC;
 out vec2 iTexCoords0;
 
 void main(void) {
@@ -22,6 +21,5 @@ void main(void) {
 	iN=normalize(V*M*normal);
 	iV=normalize(vec4(0,0,0,1)-V*M*vertex);
 	iL=normalize(V*lp-V*M*vertex);
-	iC=color;
 	iTexCoords0=texCoords0;
 }

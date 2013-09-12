@@ -112,6 +112,8 @@ Model::~Model() {
 	clear();
 }
 void Model::draw() {
+	glm::mat4 M(1.0f);
+	world->pass_matrix_to_shader("M", M);
 	for (unsigned i = 0, len = meshes.size(); i < len; ++i) {
 		meshes[i]->draw();
 	}

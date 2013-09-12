@@ -5,12 +5,10 @@ out vec4 pixelColor;
 in vec4 iV;
 in vec4 iN;
 in vec4 iL;
-in vec4 iC;
 in vec2 iTexCoords0;
 
 
 uniform sampler2D textureMap0; 
-uniform sampler2D textureMap1;
 
 float shininess=50;
 
@@ -26,7 +24,7 @@ void main(void) {
 	float rv=pow(max(0,dot(eyeR,eyeV)),shininess);
 
 	vec4 texColor0=texture(textureMap0,iTexCoords0);
-	vec4 texColor1=texture(textureMap1,iTexCoords0);
+	vec4 texColor1=texColor0;
 
 	vec4 La=vec4(0,0,0,0);
 	vec4 Ma=vec4(0,0,0,0);

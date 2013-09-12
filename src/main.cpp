@@ -155,13 +155,6 @@ void gl_init(int *argc, char **argv) {
 	glutSetCursor(GLUT_CURSOR_NONE);
 	
 	glewInit();
-	glEnable(GL_NORMALIZE);
-	
-	glEnable(GL_SMOOTH);
-	glShadeModel(GL_SMOOTH);
-	
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_2D);
 	
 	glutDisplayFunc(display_frame);
 	glutIdleFunc(next_frame);
@@ -172,6 +165,8 @@ void gl_init(int *argc, char **argv) {
 	glutSpecialFunc(key_down);
 	glutPassiveMotionFunc(mouse_motion);
 	glutMotionFunc(mouse_motion);
+  
+  glActiveTexture(GL_TEXTURE0);
 }
 
 int main(int argc, char **argv) {
