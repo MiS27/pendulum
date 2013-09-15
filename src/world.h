@@ -19,18 +19,17 @@ class Camera;
 class World {
 private: 
 	ShaderProgram *shader_program;
-	glm::mat4 P;
 	float mouse_sensitivity_x, mouse_sensitivity_y;
 	bool invert_mouse_y;
-
-	Camera *camera;
-	Model *model;
 
 	void setup_shaders();
 	void clean_shaders();
 public:
 	World(){}
 	~World();
+	Camera *camera;
+	Model *model;
+	glm::mat4 P;
 	void clear();
 	void next_frame(direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn);
 	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);

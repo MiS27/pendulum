@@ -150,7 +150,7 @@ void gl_init(int *argc, char **argv) {
 	glutInitWindowSize(screen_width, screen_height);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Pendulum");
-	glutFullScreen();
+	//glutFullScreen();
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glutSetCursor(GLUT_CURSOR_NONE);
 	
