@@ -165,6 +165,7 @@ void gl_init(int *argc, char **argv) {
 	glutSpecialFunc(key_down);
 	glutPassiveMotionFunc(mouse_motion);
 	glutMotionFunc(mouse_motion);
+	glEnable(GL_DEPTH_TEST);
   
   glActiveTexture(GL_TEXTURE0);
 }
