@@ -83,8 +83,8 @@ void World::clear() {
 }
 
 void World::draw() {
-	glm::mat4 V = camera->get_view_matrix();
 	glm::mat4 P = this->P;
+	glm::mat4 V = camera->get_view_matrix();
 	pass_matrix_to_shader("V", V);
 	pass_matrix_to_shader("P", P);
 	model->draw();
