@@ -1,3 +1,51 @@
+Moja koncepcja na schemat klas jest poniższa, zróbcie z tym co chcecie:
+
+Animation - klasa:
+  - czas animacji (animation_time)
+  - funkcję-dystrybuantę, która charakteryzuje przebieg jednej klatki o dziedzinie [0..1] i zbiorze wartości [0..1], przy czym F(0) = 0 oraz F[1] = 1 i funkcja jest ciągła (przynajmniej w teorii). Jej wykres może wyglądać np. tak:
+
+ ^
+1|                                           ______________________
+ |                                          ,
+ |                                         /
+ |                                        /
+ |                                       |
+ |                                       |
+ |                                      |
+ |                                      |
+ |                                     |
+ |                                    /
+ |                                   /
+ |                                  /
+ |                                 /
+ |                                /
+ |                               /
+0|__________________________..--'_________________________________,__\
+                                                                  1  /
+
+  - dla podanego czasu, jaki chcemy mieć (dt) zwraca wartość funkcji:
+    arg = dt / animation_time;
+    floor_arg = floor(arg);
+    arg = arg - floor_arg;
+    return F(arg) + floor(arg);
+Jej ideą jest zwrócenie względnego przesunięcia - rotacji o jaki się obracają elementy w kwancie czasu (dt) w porównaniu do pełnego tiku zegara. Ta wartość jest dodawana do rotacji elementów. Funkcja F jest podawana do klasy jako wskaźnik. W ten sposób można stworzyć wiele "animacji" o żądanej nieliniowej charakterystyce - w końcu zegar tyka, a nie chodzi liniowo. Hmm... myślę, że ta funkcja dystrybuanta może mieć inny przbieg niż 0-->1 np. dla wahadła - to może być sinusoida.
+Może mieć metodę cache_result(dt), która będzie wywoływana w world i potem tylko brać cached_result we wszystkich miejscach.
+Idea jest również taka, że to będzie zajebiście tykać :P
+
+
+ClockPart - dziedziczy z Model:
+  - ma wskaźnik na animację i określony sposób jej wykorzystania (tu chyba są same rotacje, chyba, że zacznie Wam się coś przesuwać :)
+  - zawiera przesunięcie, rotację etc. i umożliwia wygenerowanie z tych wartości macierzy M przed rysowaniem
+Dzięki tej klasie można zrobić zębatki, wahadło, kotwicę etc. Bierze sobie z animacji o ile się przesuwa i zapisuje sobie.
+
+
+Clock - zawiera ClockParts wraz z ich przesunięciami względem modelu. Dobrze zajrzeć jak to jest zrobione tu: https://github.com/alatar-/truck_opengl/blob/master/src/truck_part.cpp
+in_transform jest inicjowany z pliku config.ini i tam można zapisać względne przesunięcie, które będzie aplikowane przez cały czas trwania programu.
+
+
+
+
+
 GODZINA ZERO - w miejscu dwunastki, 24h zegar
 
 na tylniej ścianie:

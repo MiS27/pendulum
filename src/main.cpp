@@ -42,20 +42,23 @@ void key_down(int c, int x, int y) {
 }
 
 void keyDown(unsigned char c, int x, int y) {
-    switch (c) {
-        case 'w':
-            f_key_w = true;
-            break;
-        case 's':
-            f_key_s = true;
-            break;
-        case 'a':
-            f_key_a = true;
-            break;
-        case 'd':
-            f_key_d = true;
-            break;
-    }
+  switch (c) {
+    case 'w':
+      f_key_w = true;
+      break;
+    case 's':
+      f_key_s = true;
+      break;
+    case 'a':
+      f_key_a = true;
+      break;
+    case 'd':
+      f_key_d = true;
+      break;
+    case 'q':
+      glutLeaveMainLoop();
+      break;
+  }
 }
 
 void key_up(int c, int x, int y) {
@@ -150,7 +153,7 @@ void gl_init(int *argc, char **argv) {
 	glutInitWindowSize(screen_width, screen_height);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Pendulum");
-	//glutFullScreen();
+	glutFullScreen();
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glutSetCursor(GLUT_CURSOR_NONE);
 	

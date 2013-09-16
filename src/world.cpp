@@ -51,8 +51,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 			ini.get<float>("zNear", 1.0f),
 			ini.get<float>("zFar", 400.0f)
 		);
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf(glm::value_ptr(P));
+		shaderProgram->pass_matrix_to_shader("P", P);
 	}
 	
 	{
@@ -110,7 +109,6 @@ void World::draw() {
 	glm::mat4 P = this->P;
 	glm::mat4 V = camera->get_view_matrix();
 	shaderProgram->pass_matrix_to_shader("V", V);
-	shaderProgram->pass_matrix_to_shader("P", P);
 	
 	for (auto &model : models) {
 	  model->draw();
