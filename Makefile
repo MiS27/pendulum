@@ -1,11 +1,11 @@
 CC=g++
-LIBS=-lglut -lGLEW -lMagick++ -lassimp -lGL
+LIBS=-lglut -std=c++11 -lGLEW -lMagick++ -lassimp -lGL
 TEST_LIBS=$(LIBS) -lcppunit
 OPTS=-I/usr/include/ImageMagick -I/usr/local/include/assimp `Magick++-config --cxxflags --cppflags --ldflags --libs`
 CCFLAGS=-g -Wall
 
 TARGET=pendulum
-FULL_SOURCES=camera mesh model shader_program shared texture vertex world
+FULL_SOURCES=camera mesh model simplemodel shader_program shared texture vertex world clock
 SOURCES=$(FULL_SOURCES) main
 HEADERS=$(FULL_SOURCES) libs/INI
 

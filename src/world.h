@@ -7,8 +7,9 @@
 using namespace std;
 
 #include "shared.h"
-
-class Model;
+#include "model.h"
+#include "simplemodel.h"
+#include "clock.h"
 
 #include "shader_program.h"
 
@@ -16,19 +17,21 @@ class Camera;
 #include "camera.h"
 
 
-class World {
+class World : public Model {
 private: 
-	ShaderProgram *shader_program;
 	float mouse_sensitivity_x, mouse_sensitivity_y;
+	float tilt_sensitivity;
 	bool invert_mouse_y;
+	float angle;
+	int time_last;
 
 	void setup_shaders();
 	void clean_shaders();
 public:
-	World(){}
+	World();
 	~World();
 	Camera *camera;
-	Model *model;
+	vector<Model*> models;
 	glm::mat4 P;
 	void clear();
 	void next_frame(direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn);
@@ -37,8 +40,6 @@ public:
 	void draw();
 	void mouse_motion(float dang_h, float dang_v);
 
-	void pass_matrix_to_shader(char *var_string, glm::mat4 &matrix);
-	void assign_vbo_to_attribute(char* attribute_name, GLuint buf_vbo, int variable_size);
 };
 
 #endif

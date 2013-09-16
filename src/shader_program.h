@@ -3,6 +3,7 @@
 
 #include "GL/glew.h"
 #include "stdio.h"
+#include "shared.h"
 
 class ShaderProgram {
 private:
@@ -18,6 +19,8 @@ public:
 	void use(); //Włącza wykorzystywanie programu cieniującego
 	GLuint getUniformLocation(char* variableName); //Pobiera numer slotu związanego z daną zmienną jednorodną
 	GLuint getAttribLocation(char* variableName); //Pobiera numer slotu związanego z danym atrybutem
+	void pass_matrix_to_shader(char *var_string, glm::mat4 &matrix);
+	void assign_vbo_to_attribute(char* attribute_name, GLuint buf_vbo, int variable_size);
 };
 
 

@@ -5,30 +5,26 @@
 #include <vector>
 #include <GL/glew.h>
 #include "shared.h"
-
-class World;
-#include "mesh.h"
-#include "texture.h"
-#include "vertex.h"
+#include "shader_program.h"
 
 using namespace std;
 
 class Model {
 protected:
-	vector <Mesh*> meshes;
-	vector <Texture*> textures;
-	World *world;
-	
-	virtual bool parse_scene(const aiScene *pScene, string &model_file);
-	bool load_textures(const aiScene* pScene, const string &model_file);
-	bool load_texture_from_material(aiMaterial *material, string &dir, Texture **texture);
+	Model *owner;
+	ShaderProgram *shaderProgram;
+	glm::mat4 M;
+	glm::mat4 calculatedM;
 public:
-	Model(World *in_world);
-	virtual ~Model();
-	virtual void clear();
-	bool load(string model_file);
+	Model(ShaderProgram *shaderProgram, Model *owner);
+	void setM(glm::mat4 M);
+	void calculateM();
+	void rotate(float angle, glm::vec3 axis);
+	void translate(glm::vec3 translationVector);
+	virtual ~Model() {};
 	
-	void draw();
+	virtual void draw()=0;
+	
 };
 
 #endif

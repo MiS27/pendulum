@@ -3,7 +3,7 @@
 
 #include "shared.h"
 class Mesh;
-#include "world.h"
+#include "shader_program.h"
 
 #include "texture.h"
 #include <vector>
@@ -17,7 +17,7 @@ private:
 	GLuint vao, bufVertices, bufNormals, bufTexCoords;
 	Texture *texture;
 	
-	World *world;
+	ShaderProgram *shaderProgram;
 	glm::mat4 M;
 	GLuint make_buffer(void *data, int vertex_size);
 	void init_vbo();
@@ -25,7 +25,7 @@ private:
 	void free_vbo();
 	void free_vao();
 public:
-	Mesh(const aiMesh *paiMesh, Texture *in_texture, World *in_world);
+	Mesh(const aiMesh *paiMesh, Texture *in_texture, ShaderProgram *shaderProgram);
 	~Mesh();
 
 	void draw();

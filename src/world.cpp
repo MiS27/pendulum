@@ -5,7 +5,6 @@
 #include <cstring>
 #include <sstream>
 #include <string>
-#include "model.h"
 
 glm::vec3 str_to_vec3(const string &in_s) {
 	float x, y,	z;
@@ -25,11 +24,20 @@ vector <float> str_to_vec(const string &in_s) {
 	return result;
 }
 
+World::World(): Model(NULL, NULL)
+{
+
+}
+
 bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
+	this->time_last = glutGet(GLUT_ELAPSED_TIME);
+	this->angle=0;
 	setup_shaders();
+	cout<<"World::load after setup_shaders"<<endl;
 	ini_t ini(in_config_file, true);
 	{
 		ini.select("World");
+		tilt_sensitivity = ini.get<float>("tiltSensitivity", 0.01f);
 		mouse_sensitivity_x = ini.get<float>("mouseSensitivityX", 0.8f);
 		mouse_sensitivity_y = ini.get<float>("mouseSensitivityY", 0.8f);
 		invert_mouse_y = ini.get<bool>("invertMouseY", false);
@@ -56,16 +64,31 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
       ini.get<float>("angX", 0.0f),
 			ini.get<float>("speed", 20.0f),
       ini.get<float>("max_vertical_angle_up", 0.5f),
-      ini.get<float>("max_vertical_angle_down", 0.5f)
+      ini.get<float>("max_vertical_angle_down", 0.5f),
+      1,
+      1
 		);
 	}
 
 	{
-		model = new Model(this);
-		if(!model->load("models/dobra_dupa.obj")) {
+		Clock* clock = new Clock(shaderProgram,(Model*)this);
+		if(!clock->load()) {
+			fprintf(stderr, "Nie ma clocka, nie ma programu.\n");
+			return false;
+		}
+		else
+			models.push_back(clock);
+	/*
+	cout<<"World::load before simpleModel"<<endl;
+		SimpleModel* simpleModel = new SimpleModel(shaderProgram,(Model*)this);
+	cout<<"World::load before simpleModel->load"<<endl;
+		if(!simpleModel->load("models/dobra_dupa.obj")) {
 			fprintf(stderr, "Nie ma dup, nie ma programu.\n");
 			return false;
 		}
+		else
+			models.push_back(simpleModel);
+		*/
 	}
 
 	printf("World loaded!\n");
@@ -83,15 +106,28 @@ void World::clear() {
 }
 
 void World::draw() {
+	calculateM();
 	glm::mat4 P = this->P;
 	glm::mat4 V = camera->get_view_matrix();
-	pass_matrix_to_shader("V", V);
-	pass_matrix_to_shader("P", P);
-	model->draw();
+	shaderProgram->pass_matrix_to_shader("V", V);
+	shaderProgram->pass_matrix_to_shader("P", P);
+	
+	for (auto &model : models) {
+	  model->draw();
+	}
 }
 
 void World::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct_t cam_up_down, direct_t veh_front_back, direct_t veh_right_left) {
-	camera->move(cam_right_left, cam_front_back, cam_up_down);
+	//camera->move(cam_right_left, cam_front_back, cam_up_down);
+	camera->move(cam_front_back);
+	camera->tilt(cam_right_left*tilt_sensitivity);
+	
+    int time_now = glutGet(GLUT_ELAPSED_TIME);
+    int time_delta = time_now - time_last;
+	time_last = time_now;
+	angle=360*time_delta/1000.0;
+	//if (angle>360) angle-=360;
+	((Clock*)models.back())->gear12->rotate(angle,glm::vec3(0.0f,1.0f,0.0f));
 }
 
 void World::mouse_motion(float dang_h, float dang_v) {
@@ -102,22 +138,11 @@ void World::mouse_motion(float dang_h, float dang_v) {
 }
 
 void World::setup_shaders() {
-  shader_program = new ShaderProgram("vshader.txt", NULL, "fshader.txt");
-  shader_program->use();
-  glUniform1i(shader_program->getUniformLocation("textureMap0"),0);
+  shaderProgram = new ShaderProgram("vshader.txt", NULL, "fshader.txt");
+  shaderProgram->use();
+  glUniform1i(shaderProgram->getUniformLocation("textureMap0"),0);
 }
 
 void World::clean_shaders() {
-  delete shader_program;
-}
-
-void World::pass_matrix_to_shader(char *var_string, glm::mat4 &matrix) {
-	glUniformMatrix4fv(shader_program->getUniformLocation(var_string), 1, false, glm::value_ptr(matrix));	
-}
-
-void World::assign_vbo_to_attribute(char* attribute_name, GLuint buf_vbo, int variable_size) {
-	GLuint location = shader_program->getAttribLocation(attribute_name);
-	glBindBuffer(GL_ARRAY_BUFFER, buf_vbo);
-	glEnableVertexAttribArray(location);
-	glVertexAttribPointer(location, variable_size, GL_FLOAT, GL_FALSE, 0, NULL);
+  delete shaderProgram;
 }

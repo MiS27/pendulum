@@ -15,7 +15,7 @@ bool f_key_up, f_key_down,
      f_key_w, f_key_s,
      f_key_a, f_key_d;
 
-World *world = new World();
+World *world;
 
 
 void key_down(int c, int x, int y) {
@@ -131,7 +131,7 @@ void display_frame() {
 
 void next_frame() {
 	world->next_frame(
-		(direct_t)(BACK * f_key_right + FRONT * f_key_left),
+		(direct_t)(BACK * f_key_left + FRONT * f_key_right),
 		(direct_t)(BACK * f_key_down + FRONT * f_key_up),
 		(direct_t)(BACK * f_key_lower + FRONT * f_key_higher),
 		(direct_t)(BACK * f_key_s    + FRONT * f_key_w),
@@ -171,11 +171,16 @@ void gl_init(int *argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
+  cout<<"Main"<<endl;
 	gl_init(&argc, argv);
+  cout<<"Main after gl_init"<<endl;
+  world = new World();
+  cout<<"Main after world"<<endl;
   if(!world->load("config.ini", screen_width, screen_height)) {
     fprintf(stderr, "Error loading world. Spierdalaj\n");
     return -1;
   }
+  cout<<"Main after world->load"<<endl;
 	
 	glutMainLoop();
 

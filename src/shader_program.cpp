@@ -123,3 +123,14 @@ GLuint ShaderProgram::getUniformLocation(char* variableName) {
 GLuint ShaderProgram::getAttribLocation(char* variableName) {
 	return glGetAttribLocation(shaderProgram,variableName);
 }
+
+void ShaderProgram::pass_matrix_to_shader(char *var_string, glm::mat4 &matrix) {
+	glUniformMatrix4fv(getUniformLocation(var_string), 1, false, glm::value_ptr(matrix));	
+}
+
+void ShaderProgram::assign_vbo_to_attribute(char* attribute_name, GLuint buf_vbo, int variable_size) {
+	GLuint location = getAttribLocation(attribute_name);
+	glBindBuffer(GL_ARRAY_BUFFER, buf_vbo);
+	glEnableVertexAttribArray(location);
+	glVertexAttribPointer(location, variable_size, GL_FLOAT, GL_FALSE, 0, NULL);
+}
