@@ -1,5 +1,5 @@
 CC=g++
-LIBS=-lglut -std=c++11 -lGLEW -lMagick++ -lassimp -lGL
+LIBS=-lglut -std=c++0x -lGLEW -lMagick++ -lassimp -lGL
 TEST_LIBS=$(LIBS) -lcppunit
 OPTS=-I/usr/include/ImageMagick -I/usr/local/include/assimp `Magick++-config --cxxflags --cppflags --ldflags --libs`
 CCFLAGS=-g -Wall
