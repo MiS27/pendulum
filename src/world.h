@@ -25,10 +25,8 @@ private:
 	float angle;
 	int time_last;
 
-	void setup_shaders();
-	void clean_shaders();
 public:
-	World();
+	World(ShaderProgram* shaderprogram, Model* owner);
 	~World();
 	Camera *camera;
 	vector<Model*> models;

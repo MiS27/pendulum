@@ -3,6 +3,7 @@
 
 #include "world.h"
 #include "shared.h"
+#include "shader_program.h"
 
 #define MOUSE_OVERFLOW 300
 
@@ -177,7 +178,12 @@ int main(int argc, char **argv) {
   cout<<"Main"<<endl;
 	gl_init(&argc, argv);
   cout<<"Main after gl_init"<<endl;
-  world = new World();
+  
+  ShaderProgram* shaderProgram = new ShaderProgram("vshader.txt", NULL, "fshader.txt");
+  shaderProgram->use();
+  glUniform1i(shaderProgram->getUniformLocation("textureMap0"),0);
+  
+  world = new World(shaderProgram,NULL);
   cout<<"Main after world"<<endl;
   if(!world->load("config.ini", screen_width, screen_height)) {
     fprintf(stderr, "Error loading world. Spierdalaj\n");
@@ -188,5 +194,6 @@ int main(int argc, char **argv) {
 	glutMainLoop();
 
   delete world;
+  delete shaderProgram;
 	return 0;
 }

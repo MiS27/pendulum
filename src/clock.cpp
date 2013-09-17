@@ -2,7 +2,7 @@
 
 Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,owner) {
 	gear12=new SimpleModel(shaderProgram,(Model*)this);
-	gear12->translate(glm::vec3(10.0f,0,0));
+	gear12->translate(glm::vec3(1.0f,0,0));
 	gear15=new SimpleModel(shaderProgram,(Model*)this);
 }
 bool Clock::load() {
@@ -10,6 +10,8 @@ bool Clock::load() {
 		fprintf(stderr, "Nie ma kół, nie ma programu.\n");
 		return false;
 	}
+	
+	gear12->rotate(360/24,glm::vec3(0.0f,1.0f,0.0f));
 	if(!gear15->load("models/gear15.obj")) {
 		fprintf(stderr, "Nie ma kół, nie ma programu.\n");
 		return false;

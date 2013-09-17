@@ -24,7 +24,7 @@ vector <float> str_to_vec(const string &in_s) {
 	return result;
 }
 
-World::World(): Model(NULL, NULL)
+World::World(ShaderProgram* shaderProgram,Model* model): Model(shaderProgram, model)
 {
 
 }
@@ -32,7 +32,6 @@ World::World(): Model(NULL, NULL)
 bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
 	this->time_last = glutGet(GLUT_ELAPSED_TIME);
 	this->angle=0;
-	setup_shaders();
 	cout<<"World::load after setup_shaders"<<endl;
 	ini_t ini(in_config_file, true);
 	{
@@ -101,7 +100,6 @@ World::~World() {
 
 void World::clear() {
 	delete camera;
-	clean_shaders();
 }
 
 void World::draw() {
@@ -123,9 +121,10 @@ void World::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct
     int time_now = glutGet(GLUT_ELAPSED_TIME);
     int time_delta = time_now - time_last;
 	time_last = time_now;
-	angle=360*time_delta/1000.0;
+	angle=90*time_delta/1000.0;
 	//if (angle>360) angle-=360;
-	((Clock*)models.back())->gear12->rotate(angle,glm::vec3(0.0f,1.0f,0.0f));
+	((Clock*)models.back())->gear12->rotate(-15.0/12.0*angle,glm::vec3(0.0f,1.0f,0.0f));
+	((Clock*)models.back())->gear15->rotate(angle,glm::vec3(0.0f,1.0f,0.0f));
 }
 
 void World::mouse_motion(float dang_h, float dang_v) {
@@ -133,14 +132,4 @@ void World::mouse_motion(float dang_h, float dang_v) {
 		dang_v *= -1;
 	}
 	camera->mouse_motion(dang_h * mouse_sensitivity_x / 300, dang_v * mouse_sensitivity_y / 300);
-}
-
-void World::setup_shaders() {
-  shaderProgram = new ShaderProgram("vshader.txt", NULL, "fshader.txt");
-  shaderProgram->use();
-  glUniform1i(shaderProgram->getUniformLocation("textureMap0"),0);
-}
-
-void World::clean_shaders() {
-  delete shaderProgram;
 }
