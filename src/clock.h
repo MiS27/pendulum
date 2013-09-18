@@ -2,16 +2,22 @@
 #define CLOCK_H
 #include "model.h"
 #include "simplemodel.h"
+#include "transmission.h"
 
 class Clock : public Model
 {
 public:
-	SimpleModel* gear12;
-	SimpleModel* gear15;
+	Transmission* t12t6;
+	Transmission* t15t6;
+	Transmission* st12t6;
+	Transmission* t36t6;
+	Transmission* t60t6;
+	Transmission* t24t6;
 	Clock(ShaderProgram *shaderProgram, Model *owner);
 	virtual ~Clock();
 	void draw();
 	bool load();
+	void run(float angle);
 };
 
 #endif // CLOCK_H

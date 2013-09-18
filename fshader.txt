@@ -15,6 +15,7 @@ float shininess=50;
 
 
 void main(void) {
+	vec2 flipped_texcoord = vec2(1.0 - iTexCoords0.x, 1.0 - iTexCoords0.y);
 	vec4 eyeN=normalize(iN);
 	vec4 eyeV=normalize(iV);
 	vec4 eyeL=normalize(iL);
@@ -23,7 +24,7 @@ void main(void) {
 	float nl=max(0,dot(eyeL,eyeN));
 	float rv=pow(max(0,dot(eyeR,eyeV)),shininess);
 
-	vec4 texColor0=texture(textureMap0,iTexCoords0);
+	vec4 texColor0=texture(textureMap0,flipped_texcoord);
 	vec4 texColor1=texColor0;
 
 	vec4 La=vec4(0,0,0,0);

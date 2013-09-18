@@ -2,8 +2,8 @@
 
 #include <cstdio>
 
-Texture::Texture(GLenum in_texture_target, const string& in_file_name) : file_name(in_file_name) {
-	texture_target = in_texture_target;
+Texture::Texture(GLenum texture_target, const string& in_file_name) : file_name(in_file_name) {
+	this->texture_target = texture_target;
 	image = NULL;
 }
 
@@ -27,6 +27,8 @@ void Texture::init_bind() {
 	glTexImage2D(texture_target, 0, GL_RGB, image->columns(), image->rows(), 0, GL_RGBA, GL_UNSIGNED_BYTE, blob.data());
 	glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(texture_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(texture_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
 void Texture::bind() {

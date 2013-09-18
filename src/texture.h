@@ -16,7 +16,7 @@ private:
 	
 	void init_bind();
 public:
-	Texture(GLenum in_texture_target, const string& in_file_name);
+	Texture(GLenum texture_target, const string& file_name);
 
 	string get_file_name();
 

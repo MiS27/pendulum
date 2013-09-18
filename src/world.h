@@ -10,6 +10,7 @@ using namespace std;
 #include "model.h"
 #include "simplemodel.h"
 #include "clock.h"
+#include "skybox.h"
 
 #include "shader_program.h"
 

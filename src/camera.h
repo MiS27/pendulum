@@ -6,7 +6,7 @@
 #include "shared.h"
 #include "vertex.h"
 
-#define CAMERA_RADIUS 100
+#define CAMERA_RADIUS 10
 
 class Camera {
 private:

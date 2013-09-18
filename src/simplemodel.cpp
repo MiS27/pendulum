@@ -33,7 +33,7 @@ bool SimpleModel::parse_scene(const aiScene *pScene, string &model_file) {
 	} else {
 		return false;
 	}
-		cout<<"SimpleModel::parse_scene after Mesh"<<endl;
+		//cout<<"SimpleModel::parse_scene after Mesh"<<endl;
 	
 	return true;
 }

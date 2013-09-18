@@ -44,11 +44,11 @@ Mesh::Mesh (const aiMesh *paiMesh, Texture *texture, ShaderProgram *shaderProgra
 		norm_data[i4 + 2] = norm->z;
 		norm_data[i4 + 3] = 0.0f;
 	}
-	cout<<"Mesh::Mesh before init_vbo"<<endl;
+	//cout<<"Mesh::Mesh before init_vbo"<<endl;
 	init_vbo();
-	cout<<"Mesh::Mesh before init_vao"<<endl;
+	//cout<<"Mesh::Mesh before init_vao"<<endl;
 	init_vao();
-	cout<<"Mesh::Mesh after init_vao"<<endl;
+	//cout<<"Mesh::Mesh after init_vao"<<endl;
 }
 
 Mesh::~Mesh() {
@@ -91,7 +91,7 @@ void Mesh::init_vao() {
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	cout<<"Mesh::init_vao before shaderProgram "<<shaderProgram<<endl;
+	//cout<<"Mesh::init_vao before shaderProgram "<<shaderProgram<<endl;
 	shaderProgram->assign_vbo_to_attribute("vertex", bufVertices, 4);
 	shaderProgram->assign_vbo_to_attribute("normal", bufNormals, 4);
 	shaderProgram->assign_vbo_to_attribute("texCoords0", bufTexCoords, 2);

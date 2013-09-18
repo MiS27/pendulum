@@ -69,13 +69,26 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 	}
 
 	{
-		Clock* clock = new Clock(shaderProgram,(Model*)this);
+		cout<<"SKYBOX"<<endl;
+		SkyBox* skyBox = new SkyBox(shaderProgram,(Model*)this);
+		if(!skyBox->load("skyboxes/checkered","front.jpg", "back.jpg", "left.jpg", "right.jpg", "top.jpg", "bottom.jpg")) {
+			fprintf(stderr, "Nie ma skyBoxa, nie ma programu.\n");
+			return false;
+		}
+		else
+			models.push_back(skyBox);
+		//skyBox->translate();
+		skyBox->translate(glm::vec3(0.0f,-1.0f,0.0f));
+		
+		//Clock* clock = new Clock(shaderProgram,(Model*)this);
+		Clock* clock = new Clock(shaderProgram,skyBox);
 		if(!clock->load()) {
 			fprintf(stderr, "Nie ma clocka, nie ma programu.\n");
 			return false;
 		}
 		else
 			models.push_back(clock);
+		clock->translate(glm::vec3(10.0f,10.0f,0.0f));
 	/*
 	cout<<"World::load before simpleModel"<<endl;
 		SimpleModel* simpleModel = new SimpleModel(shaderProgram,(Model*)this);
@@ -121,10 +134,11 @@ void World::next_frame (direct_t cam_right_left, direct_t cam_front_back, direct
     int time_now = glutGet(GLUT_ELAPSED_TIME);
     int time_delta = time_now - time_last;
 	time_last = time_now;
-	angle=90*time_delta/1000.0;
+	angle=360*time_delta;
 	//if (angle>360) angle-=360;
-	((Clock*)models.back())->gear12->rotate(-15.0/12.0*angle,glm::vec3(0.0f,1.0f,0.0f));
-	((Clock*)models.back())->gear15->rotate(angle,glm::vec3(0.0f,1.0f,0.0f));
+	((Clock*)models.back())->run(angle);
+	//t6t12->rotate(-15.0/12.0*angle,glm::vec3(0.0f,1.0f,0.0f));
+	//((Clock*)models.back())->gear15->rotate(angle,glm::vec3(0.0f,1.0f,0.0f));
 }
 
 void World::mouse_motion(float dang_h, float dang_v) {
