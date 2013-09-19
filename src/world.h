@@ -33,7 +33,7 @@ public:
 	vector<Model*> models;
 	glm::mat4 P;
 	void clear();
-	void next_frame(direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn);
+	void next_frame(float speed, direct_t keys_h, direct_t keys_v, direct_t height, direct_t vehicle, direct_t v_turn);
 	bool load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h);
 
 	void draw();

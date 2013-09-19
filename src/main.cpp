@@ -16,6 +16,9 @@ bool f_key_up, f_key_down,
      f_key_w, f_key_s,
      f_key_a, f_key_d;
 
+float speed=1;
+float pauseSpeed=0;
+
 World *world;
 
 
@@ -55,6 +58,24 @@ void keyDown(unsigned char c, int x, int y) {
       break;
     case 'd':
       f_key_d = true;
+      break;
+    case 'p':
+      if(speed>0) {
+	pauseSpeed=speed;
+	speed=0;
+      }
+      else
+	speed=pauseSpeed;
+      break;
+    case '>':
+      if(speed<4)
+	speed+=0.1;
+      break;
+    case '<':
+      if(speed>0.1)
+	speed-=0.1;
+      else
+	speed=0;
       break;
     case 'q':
       glutLeaveMainLoop();
@@ -134,7 +155,7 @@ void display_frame() {
 }
 
 void next_frame() {
-	world->next_frame(
+	world->next_frame(speed,
 		(direct_t)(BACK * f_key_left + FRONT * f_key_right),
 		(direct_t)(BACK * f_key_down + FRONT * f_key_up),
 		(direct_t)(BACK * f_key_lower + FRONT * f_key_higher),

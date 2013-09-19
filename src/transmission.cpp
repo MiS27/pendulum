@@ -12,7 +12,7 @@ bool Transmission::load(int firstGearSize, int secoundGearSize) {
 		return false;
 	}
 	
-	//first->rotate(180/firstGearSize,glm::vec3(0.0f,1.0f,0.0f));
+	first->rotate(180/firstGearSize,glm::vec3(0.0f,1.0f,0.0f));
 	ostringstream secoundStream;
 	secoundStream << secoundGearSize;
 	if(!secound->load("models/gear"+secoundStream.str()+".obj")) {
