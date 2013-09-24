@@ -13,6 +13,10 @@ public:
 	Transmission* t36t6;
 	Transmission* t60t6;
 	Transmission* t24t6;
+	SimpleModel* t36;
+	SimpleModel* arw_sec;
+	SimpleModel* arw_min;
+	SimpleModel* arw_hour;
 	Clock(ShaderProgram *shaderProgram, Model *owner);
 	virtual ~Clock();
 	void draw();
