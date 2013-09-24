@@ -1,4 +1,5 @@
 #include "clock.h"
+#include <ctime>
 
 Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,owner) {
 	t12t6= new Transmission(shaderProgram,(Model*)this);
@@ -12,7 +13,8 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	arw_sec = new SimpleModel(shaderProgram, (Model*)this);
 	arw_min = new SimpleModel(shaderProgram, (Model*)this);
 	arw_hour = new SimpleModel(shaderProgram, (Model*)this);
-	
+
+	t12t6->rotate(30.0f,glm::vec3(0.0f,1.0f,0.0f));	
 	t15t6->translate(glm::vec3(0.805f,0.11f,0.0f));
 	st12t6->translate(glm::vec3(1.5f,0.22f,0.0f));
 	//st12t6->rotate(180/12,glm::vec3(0.0f,1.0f,0.0f));
@@ -24,14 +26,16 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	//t24t6->rotate(5.1,glm::vec3(0.0f,1.0f,0.0f));
 	t36->translate(glm::vec3(7.89f, 0.66f, 0.0f));
 	t36->rotate(5.0f,glm::vec3(0.0f,1.0f,0.0f));
-	arw_sec->rotate(-90.0f,glm::vec3(1.0f,0.0f,0.0f));
-	arw_min->rotate(-90.0f,glm::vec3(1.0f,0.0f,0.0f));
-	arw_hour->rotate(-90.0f,glm::vec3(1.0f,0.0f,0.0f));
-	
+
 	arw_sec->rotate(-90.0f,glm::vec3(0.0f,1.0f,0.0f));
 	arw_min->rotate(-90.0f,glm::vec3(0.0f,1.0f,0.0f));
 	arw_hour->rotate(-90.0f,glm::vec3(0.0f,1.0f,0.0f));
 
+	arw_sec->rotate(90.0f,glm::vec3(0.0f,0.0f,1.0f));
+	arw_min->rotate(90.0f,glm::vec3(0.0f,0.0f,1.0f));
+	arw_hour->rotate(90.0f,glm::vec3(0.0f,0.0f,1.0f));
+
+	run(seconds_today());
 }
 bool Clock::load() {
 	return t12t6->load(12,6) && t15t6->load(15,6)
@@ -60,7 +64,8 @@ void Clock::draw() {
 	arw_hour->calculateM();
 	arw_hour->draw();
 }
-void Clock::run(float angle) {
+void Clock::run(float dt) {
+	float angle = calculate_angle(dt);
 	t12t6->rotate(angle/12.0,glm::vec3(0.0f,1.0f,0.0f));
 	t15t6->rotate(-angle/30,glm::vec3(0.0f,1.0f,0.0f));
 	st12t6->rotate(angle/60,glm::vec3(0.0f,1.0f,0.0f));
@@ -69,9 +74,21 @@ void Clock::run(float angle) {
 	t24t6->rotate(-angle/3600/4,glm::vec3(0.0f,1.0f,0.0f));
 	t36->rotate(angle/3600/24,glm::vec3(0.0f,1.0,0.0f));
 
-	arw_sec->rotate(angle/60,glm::vec3(0.0f,0.0,1.0f));
-	arw_min->rotate(angle/3600,glm::vec3(0.0f,0.0,1.0f));
-	arw_hour->rotate(angle/3600/24,glm::vec3(0.0f,0.0f,1.0f));
+	arw_sec->rotate(-angle/60,glm::vec3(1.0f,0.0,0.0f));
+	arw_min->rotate(-angle/3600,glm::vec3(1.0f,0.0,0.0f));
+	arw_hour->rotate(-angle/3600/24,glm::vec3(1.0f,0.0f,0.0f));
+}
+
+int Clock::seconds_today() {
+	time_t rawtime;
+  struct tm *timeinfo;
+  time(&rawtime);
+  timeinfo = localtime(&rawtime);
+  return timeinfo->tm_sec + 60 * (timeinfo->tm_min + timeinfo->tm_hour * 60);
+}
+
+float Clock::calculate_angle(float dt) {
+	return dt * 360;
 }
 
 Clock::~Clock()

@@ -23,7 +23,6 @@ private:
 	float mouse_sensitivity_x, mouse_sensitivity_y;
 	float tilt_sensitivity;
 	bool invert_mouse_y;
-	float angle;
 	int time_last;
 
 public:

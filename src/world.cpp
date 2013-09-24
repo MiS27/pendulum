@@ -31,7 +31,6 @@ World::World(ShaderProgram* shaderProgram,Model* model): Model(shaderProgram, mo
 
 bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen_h) {
 	this->time_last = glutGet(GLUT_ELAPSED_TIME);
-	this->angle=0;
 	cout<<"World::load after setup_shaders"<<endl;
 	ini_t ini(in_config_file, true);
 	{
@@ -134,11 +133,10 @@ void World::next_frame (float speed, direct_t cam_right_left, direct_t cam_front
 	camera->tilt(cam_right_left*tilt_sensitivity);
 	
     int time_now = glutGet(GLUT_ELAPSED_TIME);
-    int time_delta = time_now - time_last;
+    float time_delta = (time_now - time_last) * 0.001f;
 	time_last = time_now;
-	angle=360*time_delta*speed;
 	//if (angle>360) angle-=360;
-	((Clock*)models.back())->run(angle);
+	((Clock*)models.back())->run(time_delta);
 	//t6t12->rotate(-15.0/12.0*angle,glm::vec3(0.0f,1.0f,0.0f));
 	//((Clock*)models.back())->gear15->rotate(angle,glm::vec3(0.0f,1.0f,0.0f));
 }
