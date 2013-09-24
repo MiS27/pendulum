@@ -21,7 +21,10 @@ public:
 	virtual ~Clock();
 	void draw();
 	bool load();
-	void run(float angle);
+	void run(float dt);
+private:
+	float calculate_angle(float dt);
+	int seconds_today();
 };
 
 #endif // CLOCK_H

@@ -9,7 +9,7 @@ FULL_SOURCES=camera mesh model simplemodel shader_program shared texture vertex 
 SOURCES=$(FULL_SOURCES) main
 HEADERS=$(FULL_SOURCES) libs/INI
 
-TEST_FULL_SOURCES=rectangle
+TEST_FULL_SOURCES=
 TEST_SOURCES=$(TEST_FULL_SOURCES) main
 TEST_HEADERS=$(TEST_FULL_SOURCES)
 TEST_TARGET=test
