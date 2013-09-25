@@ -8,7 +8,8 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	t36t6 = new Transmission(shaderProgram,(Model*)this, 2.0f);
 	t60t6 = new Transmission(shaderProgram,(Model*)this);
 	t24t6 = new Transmission(shaderProgram,(Model*)this);
-	t6t6 = new Transmission(shaderProgram, (Model*)this, 2.0f);
+	t6t6 = new Transmission(shaderProgram, (Model*)this, 0.0f);
+	t6t6 = new Transmission(shaderProgram, (Model*)this, 0.0f);
 	//t6t12->rotate(180,glm::vec3(1.0f,0.0f,0.0f));
 	t36 = new SimpleModel(shaderProgram,(Model*)this);
 	p_t12t6 = new SimpleModel(shaderProgram,(Model*)this);
@@ -18,7 +19,7 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	p_t60t6 = new SimpleModel(shaderProgram,(Model*)this);
 	p_t24t6 = new SimpleModel(shaderProgram,(Model*)this);
 	p_t36 = new SimpleModel(shaderProgram,(Model*)this);
-
+	anchor = new SimpleModel(shaderProgram, (Model*)this);
 
 	arw_sec = new SimpleModel(shaderProgram, (Model*)this);
 	arw_min = new SimpleModel(shaderProgram, (Model*)this);
@@ -32,9 +33,9 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	plate->translate(glm::vec3(0.0f,10.0f,-13.5f));
 	plate->scale(glm::vec3(0.5f,0.5f,0.5f));
 
-	t12t6->translate(glm::vec3(0.0f,0.0f,-5.0f));
-	t15t6->translate(glm::vec3(0.805f,0.11f,-5.0f));
-	st12t6->translate(glm::vec3(0.0f,0.22f,-5.0f));
+	t12t6->translate(glm::vec3(0.0f,-6*r-3.5*t,-0.5f));
+	t15t6->translate(glm::vec3(0.0f,-6*r-2.5*t, 3.0f+z));
+	st12t6->translate(glm::vec3(0.0f,-6*r-1.5*t,3.0f+z));
 	t36t6->translate(glm::vec3(3.0f,0.33f,-5.0f));
 	t60t6->translate(glm::vec3(0.0f,0.44f,-5.0f));
 	t24t6->translate(glm::vec3(6.34f,0.55f,-5.0f));
@@ -87,6 +88,7 @@ bool Clock::load() {
 			&& arw_hour->load("models/arw_m.obj")
 			&& house->load("models/house.obj")
 			&& plate->load("models/clock plate.obj")
+			&& anchor->load("models/anchor.obj")
 
 			&& p_t12t6->load("models/pret.obj")
 			&& p_t15t6->load("models/pret.obj")
@@ -120,6 +122,9 @@ void Clock::draw() {
 
 	plate->calculateM();
 	plate->draw();
+
+	anchor->calculateM();
+	anchor->draw();
 
 	p_t12t6->calculateM();
 	p_t15t6->calculateM();

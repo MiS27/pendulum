@@ -4,6 +4,10 @@
 #include "simplemodel.h"
 #include "transmission.h"
 
+#define t 0.1138f
+#define r 0.19612f
+#define z 0.10512f
+
 class Clock : public Model
 {
 public:
@@ -27,6 +31,7 @@ public:
 	SimpleModel* p_t60t6;
 	SimpleModel* p_t24t6;
 	SimpleModel* p_t36;
+	SimpleModel* anchor;
 	Clock(ShaderProgram *shaderProgram, Model *owner);
 	virtual ~Clock();
 	void draw();

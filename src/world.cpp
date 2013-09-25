@@ -54,10 +54,14 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 	
 	{
 		ini.select("Camera");
+		float x = ini.get<float>("posX", 0.0f);
+		float y = ini.get<float>("posY", 0.0f);
+		float z = ini.get<float>("posZ", 5.0f);
+
 		camera = new Camera(
-			ini.get<float>("posX", 0.0f),
-			ini.get<float>("posY", 0.0f),
-			ini.get<float>("posZ", 5.0f),
+			x,
+			y,
+			z,
       ini.get<float>("angX", 0.0f),
 			ini.get<float>("speed", 20.0f),
       ini.get<float>("max_vertical_angle_up", 0.5f),
@@ -65,11 +69,20 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
       1,
       1
 		);
+
+		glUniform4f(shaderProgram->getUniformLocation("camera"), x, y, z,	1.0f);
 	}
 
 	{
-		ini.select("Light");
-	  glUniform4f(shaderProgram->getUniformLocation("lp"),
+		ini.select("Light1");
+	  glUniform4f(shaderProgram->getUniformLocation("lp1"),
+			ini.get<float>("posX", 10.0f),
+			ini.get<float>("posY", 10.0f),
+			ini.get<float>("posZ", 10.0f),
+	  	1.0f
+	  );
+	  ini.select("Light2");
+	  glUniform4f(shaderProgram->getUniformLocation("lp2"),
 			ini.get<float>("posX", 10.0f),
 			ini.get<float>("posY", 10.0f),
 			ini.get<float>("posZ", 10.0f),
@@ -81,7 +94,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 		
 		cout<<"SKYBOX"<<endl;
 		SkyBox* skyBox = new SkyBox(shaderProgram,(Model*)this);
-		if(!skyBox->load("skyboxes/checkered","front.jpg", "back.jpg", "left.jpg", "right.jpg", "top.jpg", "bottom.jpg")) {
+		if(!skyBox->load("skyboxes/jajlands2","front.jpg", "back.jpg", "left.jpg", "right.jpg", "top.jpg", "bottom.jpg")) {
 			fprintf(stderr, "Nie ma skyBoxa, nie ma programu.\n");
 			return false;
 		}
@@ -128,6 +141,10 @@ void World::clear() {
 
 void World::draw() {
 	calculateM();
+	float x = camera->position.x;
+	float y = camera->position.y;
+	float z = camera->position.z;
+	glUniform4f(shaderProgram->getUniformLocation("camera"), x, y, z,	1.0f);
 	glm::mat4 P = this->P;
 	glm::mat4 V = camera->get_view_matrix();
 	shaderProgram->pass_matrix_to_shader("V", V);
