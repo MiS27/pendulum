@@ -20,6 +20,7 @@ public:
 	void setM(glm::mat4 M);
 	void calculateM();
 	void rotate(float angle, glm::vec3 axis);
+	void scale(glm::vec3 axis);
 	void translate(glm::vec3 translationVector);
 	virtual ~Model() {};
 	

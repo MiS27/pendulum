@@ -204,8 +204,7 @@ int main(int argc, char **argv) {
   
   ShaderProgram* shaderProgram = new ShaderProgram("vshader.txt", NULL, "fshader.txt");
   shaderProgram->use();
-  glUniform1i(shaderProgram->getUniformLocation("textureMap0"),0);
-  
+
   world = new World(shaderProgram,NULL);
   cout<<"Main after world"<<endl;
   if(!world->load("config.ini", screen_width, screen_height)) {

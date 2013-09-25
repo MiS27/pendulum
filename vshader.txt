@@ -9,7 +9,7 @@ in vec4 color;
 in vec4 normal;
 in vec2 texCoords0;
 
-vec4 lp=vec4(0,0,7,1);
+uniform vec4 lp;
 
 out vec4 iV;
 out vec4 iN;

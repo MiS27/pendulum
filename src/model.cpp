@@ -8,7 +8,7 @@ Model::Model(ShaderProgram* shaderProgram, Model *owner) {
 
 
 void Model::setM(glm::mat4 M) {
-this->M=M;
+	this->M=M;
 }
 
 void Model::calculateM() {
@@ -20,6 +20,10 @@ void Model::calculateM() {
 
 void Model::rotate(float angle, glm::vec3 axis) {
 	M=glm::rotate(M,angle,axis);
+}
+
+void Model::scale(glm::vec3 axis) {
+	M=glm::scale(M,axis);
 }
 
 void Model::translate(glm::vec3 translationVector)

@@ -8,7 +8,8 @@ class Transmission : public Model
 public:
 	SimpleModel* first;
 	SimpleModel* secound;
-	Transmission(ShaderProgram *shaderProgram, Model *owner);
+  float dist;
+	Transmission(ShaderProgram *shaderProgram, Model *owner, float dist = 0.1f);
 	virtual ~Transmission();
 	void draw();
 	bool load(int firstGearSize, int secoundGearSize);

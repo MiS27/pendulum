@@ -68,6 +68,16 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 	}
 
 	{
+		ini.select("Light");
+	  glUniform4f(shaderProgram->getUniformLocation("lp"),
+			ini.get<float>("posX", 10.0f),
+			ini.get<float>("posY", 10.0f),
+			ini.get<float>("posZ", 10.0f),
+	  	1.0f
+	  );
+	}
+
+	{
 		
 		cout<<"SKYBOX"<<endl;
 		SkyBox* skyBox = new SkyBox(shaderProgram,(Model*)this);
