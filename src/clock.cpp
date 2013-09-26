@@ -5,7 +5,7 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	t12t6= new Transmission(shaderProgram,(Model*)this);
 	t15t6 = new Transmission(shaderProgram,(Model*)this);
 	st12t6 = new Transmission(shaderProgram,(Model*)this);
-	t36t6 = new Transmission(shaderProgram,(Model*)this, 2.0f);
+	t36t6 = new Transmission(shaderProgram,(Model*)this,  9 * CLOCK_R + CLOCK_Z - CLOCK_T);
 	t60t6 = new Transmission(shaderProgram,(Model*)this);
 	t24t6 = new Transmission(shaderProgram,(Model*)this);
 	t6t6 = new Transmission(shaderProgram, (Model*)this, 9 * CLOCK_R - 0.5 * CLOCK_T);
@@ -33,9 +33,9 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	plate->translate(glm::vec3(0.0f,10.0f,-13.5f));
 	plate->scale(glm::vec3(0.5f,0.5f,0.5f));
 
-	t12t6->translate(glm::vec3(0.0f,-6*CLOCK_R-3.5*CLOCK_T,-0.5f+OFFSET));
-	t15t6->translate(glm::vec3(0.0f,-6*CLOCK_R-2.5*CLOCK_T, 3.0f+CLOCK_Z+OFFSET));
-	st12t6->translate(glm::vec3(0.0f,-6*CLOCK_R-1.5*CLOCK_T,3.0f+CLOCK_Z+OFFSET));
+	t12t6->translate(glm::vec3(0.0f,-6*CLOCK_R-3.5*CLOCK_T,-0.5 * CLOCK_R+OFFSET));
+	t15t6->translate(glm::vec3(0.0f,-6*CLOCK_R-2.5*CLOCK_T, 3.0 * CLOCK_R+CLOCK_Z+OFFSET));
+	st12t6->translate(glm::vec3(0.0f,-6*CLOCK_R-1.5*CLOCK_T,3.0 * CLOCK_R+CLOCK_Z+OFFSET));
 	t36t6->translate(glm::vec3(CLOCK_R+0.5*CLOCK_T, 0.0f, 0.0f+OFFSET));
 	t60t6->translate(glm::vec3(0.0f, 8 * CLOCK_R - CLOCK_T, 0.0f+OFFSET));
 	t24t6->translate(glm::vec3(CLOCK_R + 0.5 * CLOCK_T, 12 * CLOCK_R + 0.5 * CLOCK_T, 0.0f+OFFSET));
@@ -47,12 +47,12 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	t12t6->rotate(30.0f,glm::vec3(0.0f,1.0f,0.0f));	
 	t36->rotate(5.0f,glm::vec3(0.0f,1.0f,0.0f));
 
-	p_t15t6->translate(glm::vec3(0.805f,0.0f,-5.0f));
-	p_st12t6->translate(glm::vec3(1.5f,0.0f,-5.0f));
-	p_t36t6->translate(glm::vec3(3.0f,0.0f,-5.0f));
-	p_t60t6->translate(glm::vec3(5.25f,0.0f,-5.0f));
-	p_t24t6->translate(glm::vec3(6.34f,0.0f,-5.0f));
-	p_t36->translate(glm::vec3(7.89f, 0.0f, -5.0f));
+	// p_t15t6->translate(glm::vec3(0.805f,0.0f,-5.0f));
+	// p_st12t6->translate(glm::vec3(1.5f,0.0f,-5.0f));
+	// p_t36t6->translate(glm::vec3(3.0f,0.0f,-5.0f));
+	// p_t60t6->translate(glm::vec3(5.25f,0.0f,-5.0f));
+	// p_t24t6->translate(glm::vec3(6.34f,0.0f,-5.0f));
+	// p_t36->translate(glm::vec3(7.89f, 0.0f, -5.0f));
 
 	glm::vec3 pret_scale(0.1f,4.0f,0.1f);
 	p_t12t6->scale(pret_scale);
