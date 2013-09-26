@@ -13,7 +13,7 @@ Camera::Camera(float position_x, float position_y, float position_z, float angle
     this->max_tilt_angle_left = PI / 2 * max_tilt_angle_left;
     this->max_tilt_angle_right = PI / 2 * max_tilt_angle_right;
 
-    this->speed = speed / 1000;
+    this->speed = speed / 9000;
 	this->time_last = glutGet(GLUT_ELAPSED_TIME);
 }
 

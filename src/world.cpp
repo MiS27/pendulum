@@ -63,7 +63,7 @@ bool World::load(string in_config_file, unsigned in_screen_w, unsigned in_screen
 			y,
 			z,
       ini.get<float>("angX", 0.0f),
-			ini.get<float>("speed", 20.0f),
+			ini.get<float>("speed", 10.0f),
       ini.get<float>("max_vertical_angle_up", 0.5f),
       ini.get<float>("max_vertical_angle_down", 0.5f),
       1,

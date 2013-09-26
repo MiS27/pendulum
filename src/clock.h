@@ -7,7 +7,7 @@
 #define CLOCK_T 0.1138f
 #define CLOCK_R 0.19612f
 #define CLOCK_Z 0.10512f
-#define OFFSET -3.0f
+#define OFFSET -13.5f
 
 class Clock : public Model
 {
@@ -32,8 +32,11 @@ public:
 	SimpleModel* p_t36t6;
 	SimpleModel* p_t60t6;
 	SimpleModel* p_t24t6;
+	SimpleModel* p_t6t6;
+	SimpleModel* p_t6t6s;
 	SimpleModel* p_t36;
 	SimpleModel* anchor;
+	SimpleModel* p_arw;
 	Clock(ShaderProgram *shaderProgram, Model *owner);
 	virtual ~Clock();
 	void draw();
