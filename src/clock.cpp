@@ -8,8 +8,8 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	t36t6 = new Transmission(shaderProgram,(Model*)this, 2.0f);
 	t60t6 = new Transmission(shaderProgram,(Model*)this);
 	t24t6 = new Transmission(shaderProgram,(Model*)this);
-	t6t6 = new Transmission(shaderProgram, (Model*)this, 0.0f);
-	t6t6 = new Transmission(shaderProgram, (Model*)this, 0.0f);
+	t6t6 = new Transmission(shaderProgram, (Model*)this, 9 * CLOCK_R - 0.5 * CLOCK_T);
+	t6t6s = new Transmission(shaderProgram, (Model*)this,  7 * CLOCK_R + 0.5 * CLOCK_T);
 	//t6t12->rotate(180,glm::vec3(1.0f,0.0f,0.0f));
 	t36 = new SimpleModel(shaderProgram,(Model*)this);
 	p_t12t6 = new SimpleModel(shaderProgram,(Model*)this);
@@ -33,13 +33,17 @@ Clock::Clock(ShaderProgram *shaderProgram, Model *owner):Model(shaderProgram,own
 	plate->translate(glm::vec3(0.0f,10.0f,-13.5f));
 	plate->scale(glm::vec3(0.5f,0.5f,0.5f));
 
-	t12t6->translate(glm::vec3(0.0f,-6*r-3.5*t,-0.5f));
-	t15t6->translate(glm::vec3(0.0f,-6*r-2.5*t, 3.0f+z));
-	st12t6->translate(glm::vec3(0.0f,-6*r-1.5*t,3.0f+z));
-	t36t6->translate(glm::vec3(3.0f,0.33f,-5.0f));
-	t60t6->translate(glm::vec3(0.0f,0.44f,-5.0f));
-	t24t6->translate(glm::vec3(6.34f,0.55f,-5.0f));
-	t36->translate(glm::vec3(0.0f, 0.66f, -5.0f));
+	t12t6->translate(glm::vec3(0.0f,-6*CLOCK_R-3.5*CLOCK_T,-0.5f+OFFSET));
+	t15t6->translate(glm::vec3(0.0f,-6*CLOCK_R-2.5*CLOCK_T, 3.0f+CLOCK_Z+OFFSET));
+	st12t6->translate(glm::vec3(0.0f,-6*CLOCK_R-1.5*CLOCK_T,3.0f+CLOCK_Z+OFFSET));
+	t36t6->translate(glm::vec3(CLOCK_R+0.5*CLOCK_T, 0.0f, 0.0f+OFFSET));
+	t60t6->translate(glm::vec3(0.0f, 8 * CLOCK_R - CLOCK_T, 0.0f+OFFSET));
+	t24t6->translate(glm::vec3(CLOCK_R + 0.5 * CLOCK_T, 12 * CLOCK_R + 0.5 * CLOCK_T, 0.0f+OFFSET));
+	t36->translate(glm::vec3(0.0f, 18 * CLOCK_R + 0.5 * CLOCK_T, 0.0f+OFFSET));
+	t6t6->translate(glm::vec3(11 * CLOCK_R + CLOCK_Z, -CLOCK_R - 0.5 * CLOCK_T, 0.0f+OFFSET));
+	t6t6s->translate(glm::vec3(7 * CLOCK_R + CLOCK_Z, 11 * CLOCK_R, 0.0f+OFFSET));
+	t6t6->rotate(90.0f, glm::vec3(0.0f,0.0f,1.0f));
+	t6t6s->rotate(90.0f, glm::vec3(0.0f,0.0f,1.0f));
 	t12t6->rotate(30.0f,glm::vec3(0.0f,1.0f,0.0f));	
 	t36->rotate(5.0f,glm::vec3(0.0f,1.0f,0.0f));
 
@@ -83,6 +87,7 @@ bool Clock::load() {
 			&& st12t6->load(12,6) && t36t6->load(36,6)
 			&& t60t6->load(60,6) && t24t6->load(24,6)
 			&& t36->load("models/gear36.obj")
+			&& t6t6->load(6,6) && t6t6s->load(6, 6)
 			&& arw_sec->load("models/arw_b.obj")
 			&& arw_min->load("models/arw_m.obj")
 			&& arw_hour->load("models/arw_m.obj")
@@ -107,6 +112,8 @@ void Clock::draw() {
 	t36t6->draw();
 	t60t6->draw();
 	t24t6->draw();
+	t6t6->draw();
+	t6t6s->draw();
 	t36->calculateM();
 	t36->draw();
 

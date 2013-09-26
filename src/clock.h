@@ -4,9 +4,10 @@
 #include "simplemodel.h"
 #include "transmission.h"
 
-#define t 0.1138f
-#define r 0.19612f
-#define z 0.10512f
+#define CLOCK_T 0.1138f
+#define CLOCK_R 0.19612f
+#define CLOCK_Z 0.10512f
+#define OFFSET -3.0f
 
 class Clock : public Model
 {
@@ -18,6 +19,7 @@ public:
 	Transmission* t60t6;
 	Transmission* t24t6;
 	Transmission* t6t6;
+	Transmission* t6t6s;
 	SimpleModel* t36;
 	SimpleModel* arw_sec;
 	SimpleModel* arw_min;
